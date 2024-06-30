@@ -10,7 +10,7 @@ drawing_board.title("Python Turtle Graphic")
 
 time = 20
 score = 0
-
+difficulty = None
 
 #score turtle
 
@@ -64,11 +64,27 @@ def show_hide_turtle_func():
         show_hide_turtle.hideturtle()
         show_hide_turtle.goto(randint(-225, 225), randint(-225, 225))
         show_hide_turtle.showturtle()
-        drawing_board.ontimer(show_hide_turtle_func, 500)
+        if difficulty == 'easy':
+            drawing_board.ontimer(show_hide_turtle_func, 500)
+        elif difficulty == 'difficult':
+            drawing_board.ontimer(show_hide_turtle_func, 200)
     else:
         show_hide_turtle.hideturtle()
+        
+def move_turtle():
+    if time > 0:
+        show_hide_turtle.goto(randint(-225, 225), randint(-225, 225))
+        drawing_board.ontimer(move_turtle, 100)
 
-show_hide_turtle_func()
+def start_game():
+    global difficulty
+    choice = turtle.textinput("Difficulty", "Choose difficulty: easy or difficult")
+    if choice in ['easy', 'difficult']:
+        difficulty = choice
+        if difficulty == 'difficult':
+            move_turtle()
+        show_hide_turtle_func()
+
 
 def score_plus(x, y):
     global score
@@ -78,6 +94,6 @@ show_hide_turtle.onclick(score_plus)
 
 
 
-
+start_game()
 turtle.mainloop()
 
